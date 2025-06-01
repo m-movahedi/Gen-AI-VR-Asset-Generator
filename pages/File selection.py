@@ -6,7 +6,7 @@ st.set_page_config(page_title="Select model", page_icon="🗃️", layout="wide"
 st.title("Select model 🗃️")
 check_apis = False
 
-file = st.file_uploader("Upload your model file", type=["ifc","dae"], key="model_file")
+file = st.file_uploader("Upload your model file", type=["ifc","dae", 'glb'], key="model_file")
 if file is not None:
     os.chdir(st.session_state.cwd)
     format_ = file.name.split('.')[-1]
@@ -18,7 +18,7 @@ if file is not None:
         from Utils.utils import convert_ifc
         st.session_state.ifc_file = "./temp/temp.ifc"
         try:
-            dae_file = convert_ifc("./temp/temp.ifc")
+            dae_file = convert_ifc("./temp/temp.ifc", format='glb')
             st.success(f"File converted successfully!", icon="✅")
             check_apis = True
         except:
