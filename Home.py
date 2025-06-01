@@ -1,8 +1,12 @@
 import streamlit as st
+import os
 
 # Set the title of the page
 st.set_page_config(page_title="Gen-AI-based VR Asset Generator", page_icon="🥽", layout="wide", initial_sidebar_state='collapsed')
 st.title("Gen-AI-based VR Asset Generator 🥽")
+
+st.session_state.cwd = os.getcwd()
+
 st.markdown("## Introduction")
 st.markdown('''This work is based on a framework presented in ***"Generative Artificial Intelligence and Virtual Reality: Emerging Future of the Building Component Inspection Training"*** during CIB WBC 2025.''')
 st.markdown("### Why this framework is needed?")

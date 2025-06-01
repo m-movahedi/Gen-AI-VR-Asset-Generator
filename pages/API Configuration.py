@@ -26,6 +26,6 @@ with c1:
         st.switch_page("Home.py")
 
 with c2:
-    if st.button("Generate ➡️", type="primary", disabled = not check_apis):
+    if st.button("Select file ➡️", type="primary", disabled = not check_apis):
         # Switch to the Generator page
-        st.switch_page("pages/Generator.py")
+        st.switch_page("pages/File selection.py")
