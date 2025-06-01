@@ -1,7 +1,7 @@
 import streamlit as st
 import os 
 
-st.set_page_config(page_title="Select model 🗃️", page_icon="🗃️", layout="wide", initial_sidebar_state='collapsed')
+st.set_page_config(page_title="Select model", page_icon="🗃️", layout="wide", initial_sidebar_state='collapsed')
 
 st.title("Select model 🗃️")
 check_apis = False
