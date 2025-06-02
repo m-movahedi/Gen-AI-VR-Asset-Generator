@@ -1,4 +1,6 @@
 import streamlit as st
+import os 
+st.session_state.cwd = os.getcwd()
 st.set_page_config(page_title="Visualize", page_icon="👀", layout="wide", initial_sidebar_state='collapsed')
 
 st.title("Visualize 👀")

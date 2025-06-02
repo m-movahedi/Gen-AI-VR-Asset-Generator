@@ -1,4 +1,6 @@
 import streamlit as st
+import os 
+st.session_state.cwd = os.getcwd()
 st.set_page_config(page_title="API Configuration", page_icon="🖥️", initial_sidebar_state='collapsed')
 
 st.title("API Configuration 🖥️")
