@@ -35,9 +35,9 @@ with c1:
             color[3] = transparency  # 0.0 = fully transparent, 1.0 = fully opaque
             mat.pbrMetallicRoughness.baseColorFactor = color
                 
-        glb.save('temp/modified_glb.glb')
+        glb.save('./temp/temp.glb')
 
-        with open('temp/modified_glb.glb', "rb") as f:
+        with open('./temp/temp.glb', "rb") as f:
             glb_data = f.read()
             glb_base64 = base64.b64encode(glb_data).decode("utf-8")
         # HTML using model-viewer
