@@ -7,46 +7,48 @@ st.set_page_config(page_title="Generator", page_icon="⚙️", layout="wide", in
 st.title("Generator ⚙️")
 
 file = st.file_uploader("Upload your model file", type=["ifc","dae", 'glb'], key="model_file")
-st.write(st.session_state.cwd)
-def convert(file_, output_path='./temp', output_name = 'temp', format ='glb'):
-    """
-    Convert a 3D model file to GLB format using IfcConvert.
-    
-    Parameters:
-    - input_file: Path to the input 3D model file (IFC, DAE, or GLB).
-    - output_file: Path to save the converted GLB file.
-    
-    Returns:
-    - str: Path to the converted GLB file.
-    """
-    import subprocess
-    import os
-    import shutil
-    cwd = os.getcwd()
+format_ = file.name.split('.')[-1] if file else None
+if format_ != 'dae':
+    from Utils.utils import convert
+    output_path, format_, status_flag = convert(file,'/temp','temp','dae')
+    file = trimesh.load(output_path)
+else:
+    output_path = f'./temp/{file.name}'
+    format_ = 'dae'
+    status_flag = True
+
+if status_flag:
+    import trimesh
     try:
-        # Ensure the temp directory exists
-        os.makedirs('temp', exist_ok=True)
-        
-        with open(f'./temp/{file_.name}', "wb") as f:
-            f.write(file_.getbuffer())
-        # Copy files to temp directory
-        shutil.copy('./Utils/IfcConvert.exe', './temp/IfcConvert.exe')
-        
-        # Change to temp directory
-        os.chdir('./temp')
+        mesh = trimesh.load(output_path)
+        st.success("3D model loaded successfully!")
 
-        # Prepare the command for conversion
-        command = ['IfcConvert', f'./temp/{file_.name}', f'{output_path}/{output_name}.{format}','-y']
-        subprocess.run(command, check=True)
-        try:
-            result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        except subprocess.CalledProcessError as e:
-            return(e.stderr)
-        
-        #os.chdir(cwd)  # Adjust path as necessary
-    except:
-        os.chdir(st.session_state.cwd)
-    return(f'{output_path}/{output_name}.{format}', format, True)  # Return the file path, format, and check status
-    
+        # Export it to glTF for browser visualization
+        glb_path = output_path.replace('.dae', '.glb')
+        mesh.export(glb_path)
 
-convert(file, "temp20")
+        # Render using HTML component with Three.js viewer
+        import base64
+        with open(glb_path, "rb") as f:
+            glb_bytes = f.read()
+            encoded = base64.b64encode(glb_bytes).decode()
+
+        viewer_html = f"""
+        <model-viewer 
+            src="data:model/gltf-binary;base64,{encoded}"
+            alt="3D model"
+            auto-rotate 
+            camera-controls 
+            background-color="#FFFFFF" 
+            style="width: 100%; height: 500px;">
+        </model-viewer>
+
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        """
+        st.components.v1.html(viewer_html, height=500)
+
+    except Exception as e:
+        st.error(f"Failed to load model: {e}")
+
+    # Clean up
+    #os.unlink(output_path)

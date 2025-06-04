@@ -30,14 +30,15 @@ def convert(file_, output_path='./temp', output_name = 'temp', format ='glb'):
         os.chdir('./temp')
 
         # Prepare the command for conversion
-        command = ['IfcConvert', f'./temp/{file_.name}', f'{output_path}/{output_name}.{format}','-y']
+        command = ['IfcConvert', f'{file_.name}', f'{output_name}.{format}','-y']
         subprocess.run(command, check=True)
         try:
             result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         except subprocess.CalledProcessError as e:
             return(e.stderr)
-    except:
-        os.chdir(cwd)  # Adjust path as necessary
+    except Exception as e:
+        print(f"An error occurred during conversion: {e}")
+    os.chdir(cwd)  # Adjust path as necessary
 
     return(f'{output_path}/{output_name}.{format}', format, True)  # Return the file path, format, and check status
 

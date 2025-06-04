@@ -1,7 +1,6 @@
 import streamlit as st
 import os 
 import shutil
-import easygui
 from Utils.utils import convert, display
 st.set_page_config(page_title="Select model", page_icon="🗃️", layout="wide", initial_sidebar_state='collapsed')
 st.title("Select model 🗃️")
