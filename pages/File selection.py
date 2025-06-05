@@ -8,6 +8,7 @@ st.title("Select model 🗃️")
 # Constants and binary checks
 st.session_state.cwd = os.getcwd()
 os.chdir(st.session_state.cwd)
+os.makedirs('Archive', exist_ok=True)
 check_ = False
 format_ = None
 vis_ = False
@@ -18,24 +19,41 @@ st.session_state.path = None
 c1, c2 = st.columns([1, 1])
 with c2:
     #load the file
-    try:
+    #try:
         file_ = st.file_uploader("Upload your model file", type=["ifc","dae", 'glb'], key="model_file", label_visibility="collapsed")
+        
         if file_ is not None:
+            file_name = file_.name.split('.')[0].replace(' ','_')  if file_ is not None else None
             format_ = file_.name.split('.')[-1] if file_ is not None else None
+            
             if format_ not in ["ifc", "dae", "glb"]:
                 st.error("Please upload a valid file format: IFC, DAE, or GLB.", icon="❌")
             if format_ != 'glb':
-                file_path, format_, check_ = convert(file_, output_path='./temp', output_name='temp', format='glb')
+                file_path, format_, check_ = convert(file_, output_path = f'./Archive/{file_name}', output_name = f'{file_name}_base', format='glb')
                 st.success(f"""GLB file is created.""", icon="✅")
-            else:
-                with open(f'./temp/temp.glb', "wb") as f:
+            elif format_ == 'glb':
+                os.chdir(st.session_state.cwd)
+                
+                if file_name.split('_')[-1] == 'base':
+                    folder_name = file_name[:-5]
+                    os.makedirs(f'Archive/{folder_name}', exist_ok=True)
+                    
+                else:
+                    folder_name = file_name
+                    os.makedirs(f'Archive/{folder_name}', exist_ok=True)
+                
+                with open(f'./Archive/{folder_name}/{folder_name}_base.glb', "wb") as f:
                     f.write(file_.getbuffer())
-                file_path = f'./temp/temp.glb'
+                file_path = f'./Archive/{folder_name}/{folder_name}_base.glb'
                 format_ = 'glb'
                 check_ = True
+                
                 st.success(f"""GLB file is uploaded.""", icon="✅")
-    except:
-        os.chdir(st.session_state.cwd)
+            else:
+                st.error("Please upload a valid file format: IFC, DAE, or GLB.", icon="❌")
+
+    #except:
+    #    os.chdir(st.session_state.cwd)
         
 with c2:
     c121, c122 = st.columns([3, 1])
@@ -46,6 +64,8 @@ with c2:
     
 with c1:
     try:
+        st.write(vis_)
+        st.write(check_)
         if vis_ == True:
             # Check if the file is a valid 3D model format
             html = display(file_path, transparency=transparency)
@@ -56,6 +76,7 @@ with c1:
 
 os.chdir(st.session_state.cwd)
 
+#st.write(file_path)
 if st.button("Generate ➡️", type="primary", disabled = not check_):
     # Switch to the Generator page
     st.switch_page("pages/Generator.py")

@@ -20,8 +20,11 @@ def convert(file_, output_path='./temp', output_name = 'temp', format ='glb'):
     try:
         # Ensure the temp directory exists
         os.makedirs('temp', exist_ok=True)
-        
+        file_name = file_.name.split('.')[0].replace(' ','_')
+        os.makedirs(f'Archive/{file_name}', exist_ok=True)
         with open(f'./temp/{file_.name}', "wb") as f:
+            f.write(file_.getbuffer())
+        with open(f'./Archive/{file_name}/{file_.name}', "wb") as f:
             f.write(file_.getbuffer())
         # Copy files to temp directory
         shutil.copy('./Utils/IfcConvert.exe', './temp/IfcConvert.exe')
@@ -30,15 +33,17 @@ def convert(file_, output_path='./temp', output_name = 'temp', format ='glb'):
         os.chdir('./temp')
 
         # Prepare the command for conversion
-        command = ['IfcConvert', f'{file_.name}', f'{output_name}.{format}','-y']
-        subprocess.run(command, check=True)
+        command = ['IfcConvert', f'{file_.name}', f'temp.{format}','-y', '--use-element-guids']
         try:
             result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         except subprocess.CalledProcessError as e:
             return(e.stderr)
+        os.chdir(cwd)
+        shutil.copy(f'./temp/temp.{format}', f'{output_path}/{output_name}.{format}')
     except Exception as e:
         print(f"An error occurred during conversion: {e}")
     os.chdir(cwd)  # Adjust path as necessary
+    
 
     return(f'{output_path}/{output_name}.{format}', format, True)  # Return the file path, format, and check status
 
