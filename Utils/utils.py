@@ -81,3 +81,66 @@ def display(address= './temp/temp.glb', transparency=0.5):
     """
     # Display in Streamlit
     return(html)
+
+def data_extraction (file):
+    import pandas as pd
+    elements_with_ids = [el[0] for el in file.by_type("IfcRoot") if el.GlobalId]
+    component = pd.DataFrame()
+    component ['GUID'] = elements_with_ids
+
+    def get_material_by_guid(id):
+        
+        # Check for material associations
+        element = file.by_guid(id)
+        try:
+            type_= element.ObjectType
+        except:
+            type_ = "No type information available"
+        material_desc = []
+        try:
+            for rel in element.HasAssociations:
+                if rel.is_a("IfcRelAssociatesMaterial"):
+                    material = rel.RelatingMaterial
+                    
+                    # Direct material
+                    if material.is_a("IfcMaterial"):
+                        material_desc.append('The material is ' + material)
+                        
+                    # Layered material
+                    elif material.is_a("IfcMaterialLayerSetUsage"):
+                        temp = ''
+                        for layer in material.ForLayerSet.MaterialLayers:
+                            temp =  f'{layer.Material.Name} with thickness {layer.LayerThickness} \n'
+                        material_desc.append(temp)
+
+                    elif material.is_a("IfcMaterialLayerSet"):
+                        temp = ''
+                        for layer in material.MaterialLayers:
+                            temp =  f'{layer.Material.Name} with thickness {layer.LayerThickness} \n'
+                        material_desc.append(temp)
+
+                    elif material.is_a("IfcMaterialList"):
+                        temp = 'multiple materails including: \n'
+                        for mat in material.Materials:
+                            temp =  f'{mat.Name} \n'
+                        material_desc.append(temp)
+                    elif material is None:
+                        material_desc.append("No material is associated with this element")
+                    else:
+                        material_desc.append("No material is associated with this element")
+                else:
+                    material_desc.append("No material is associated with this element")
+        except:
+            material_desc.append("No material is associated with this element")
+        return (material_desc, type_)
+
+
+    component ['Material'] = None
+    component ['Type'] = None
+    i=0
+    for id in elements_with_ids:
+        material, type_ = get_material_by_guid(id)
+        component.at[i,'Material'] = material
+        component.at[i,'Type'] = type_
+        i+=1
+    return (component)

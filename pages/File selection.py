@@ -31,6 +31,11 @@ with c2:
             if format_ != 'glb':
                 file_path, format_, check_ = convert(file_, output_path = f'./Archive/{file_name}', output_name = f'{file_name}_base', format='glb')
                 st.success(f"""GLB file is created.""", icon="✅")
+                if format_ == 'ifc':
+                    from Utils.utils import data_extraction
+                    component = data_extraction(file_)
+                    import pandas as pd
+                    pd.save_csv(f'./Archive/{file_name}/{file_name}_components.csv', component)
             elif format_ == 'glb':
                 os.chdir(st.session_state.cwd)
                 
