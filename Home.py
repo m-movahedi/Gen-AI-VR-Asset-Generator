@@ -49,5 +49,5 @@ with c2:
         # Switch to the API configuration page
         st.switch_page("pages/API Configuration.py")
 with c1:
-    if st.button("Generator", type="primary"):
+    if st.button("Load the model ⬆️", type="primary"):
         st.switch_page("pages/Generator.py")
