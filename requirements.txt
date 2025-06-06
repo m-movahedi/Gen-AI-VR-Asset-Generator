@@ -1,0 +1,3 @@
+pygltflib
+openai
+ifcopenshell
