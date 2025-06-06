@@ -82,7 +82,10 @@ def display(address= './temp/temp.glb', transparency=0.5):
     # Display in Streamlit
     return(html)
 
-def data_extraction (file):
+def data_extraction (file_path):
+    import ifcopenshell
+    file = ifcopenshell.open(file_path)
+
     import pandas as pd
     elements_with_ids = [el[0] for el in file.by_type("IfcRoot") if el.GlobalId]
     component = pd.DataFrame()

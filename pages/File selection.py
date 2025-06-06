@@ -19,7 +19,7 @@ st.session_state.path = None
 c1, c2 = st.columns([1, 1])
 with c2:
     #load the file
-    #try:
+    try:
         file_ = st.file_uploader("Upload your model file", type=["ifc","dae", 'glb'], key="model_file", label_visibility="collapsed")
         
         if file_ is not None:
@@ -29,13 +29,18 @@ with c2:
             if format_ not in ["ifc", "dae", "glb"]:
                 st.error("Please upload a valid file format: IFC, DAE, or GLB.", icon="❌")
             if format_ != 'glb':
+                temp_format_ = format_
                 file_path, format_, check_ = convert(file_, output_path = f'./Archive/{file_name}', output_name = f'{file_name}_base', format='glb')
+                st.write(file_path)
+                st.write(format_)
                 st.success(f"""GLB file is created.""", icon="✅")
-                if format_ == 'ifc':
+                if temp_format_ == 'ifc':   
+                    #import pandas as pd
                     from Utils.utils import data_extraction
-                    component = data_extraction(file_)
-                    import pandas as pd
-                    pd.save_csv(f'./Archive/{file_name}/{file_name}_components.csv', component)
+                    component = data_extraction(f'./Archive/{file_name}/{file_.name.split('.')[0]}.ifc')
+                    os.chdir(st.session_state.cwd)
+                    component.to_csv(f'./Archive/{file_name}/{file_name}_components.csv')
+                    st.success(f"""Data file is uploaded.""", icon="✅")
             elif format_ == 'glb':
                 os.chdir(st.session_state.cwd)
                 
@@ -52,13 +57,15 @@ with c2:
                 file_path = f'./Archive/{folder_name}/{folder_name}_base.glb'
                 format_ = 'glb'
                 check_ = True
-                
-                st.success(f"""GLB file is uploaded.""", icon="✅")
+                import pandas as pd
+                component = pd.read_csv(f'./Archive/{folder_name}/{folder_name}_components.csv') 
+                st.success(f"""GLB file is loaded.""", icon="✅")
+                st.success(f"""Data file is uploaded.""", icon="✅")
             else:
                 st.error("Please upload a valid file format: IFC, DAE, or GLB.", icon="❌")
 
-    #except:
-    #    os.chdir(st.session_state.cwd)
+    except:
+        os.chdir(st.session_state.cwd)
         
 with c2:
     c121, c122 = st.columns([3, 1])
@@ -69,8 +76,7 @@ with c2:
     
 with c1:
     try:
-        st.write(vis_)
-        st.write(check_)
+
         if vis_ == True:
             # Check if the file is a valid 3D model format
             html = display(file_path, transparency=transparency)
