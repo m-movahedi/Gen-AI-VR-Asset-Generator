@@ -197,3 +197,19 @@ def load_image_from_gltf(glb_path, png_path, target_node_ids, output_path="test.
                 primitive.material = material_index
     # Save new GLB
     gltf.save(output_path)
+
+import base64
+from openai import OpenAI
+
+def generate_image(api_key,
+                    model="gpt-image-1",
+                    prompt="a texture of a rusty metal surface, highly detailed, suitable for 3D rendering",
+                    image_path= './temp/test.png'):
+
+    client = OpenAI(api_key = api_key)
+    img = client.images.generate(model = model, prompt = prompt)
+
+    image_bytes = base64.b64decode(img.data[0].b64_json)
+    with open(image_path, "wb") as f:
+        f.write(image_bytes)
+    return (image_path)

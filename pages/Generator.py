@@ -10,7 +10,7 @@ st.set_page_config(page_title="Generator", page_icon="⚙️", layout="wide", in
 
 st.title("Generator ⚙️")
 
-c2, c1 = st.columns([2, 1])
+c2, c1 = st.columns([1.5, 1])
 
 with c1:
     c11, c12 = st.columns([1, 1.5])
@@ -51,10 +51,39 @@ with c1:
                               type="primary",
                               #disabled=not component_list or not texture_model or not knowledge_base_file
                               )
+    component_indx = []
+    for i in component_list:
+        component_indx.append(components[components['GUID'] == i].index[0])
+    #st.write(component_indx)
     if generate_flag:
+        from Utils.utils import generate_image, load_image_from_gltf
+        system_prompt = f"""You are a Gen-AI model that generates textures for 3D models based on the provided components and additional information.
+                            The condition rating is based on the following scale:
+                            {knowledge_base_file.getvalue().decode('utf-8') if knowledge_base_file else "0: New, 100: Deteriorated"}"""
+        os.makedirs(f"./{session['path']}/Textures",  exist_ok=True)
+        os.makedirs(f"./{session['path']}/Modified",  exist_ok=True)
         st.progress(0, text="Generating assets...")
-        
-    st.write(type(component_list)==list)
+        temp_model_path = session['file_path']
+        for component in component_indx:
+            st.write( components.loc[component]['GUID'])
+            os.makedirs(f"{session['path']}/Textures/{components.loc[component]['GUID']}",  exist_ok=True)
+            user_prompt = f"""Generate a texture image of the surface of a {components.loc[component]['Material']} material at condition rating index (CI) of {condition_rating} percent.
+            Generate a texture that shows the surface condition of the material and can be applies to the 3D object in a glb file"""
+            prompt = f"""{system_prompt}
+                      {user_prompt}"""
+            #os.makedirs(f"./{session['path']}/Textures/{components.loc[component]['GUID'][component]}",  exist_ok=True)
+            temp = generate_image(  api_key = session['openai_api_key'],
+                                    model  ="gpt-image-1",
+                                    prompt = prompt,
+                                    image_path= f"./{session['path']}/Textures/{components.loc[component]['GUID']}/{condition_rating}.png")
+            
+            load_image_from_gltf(   temp_model_path,
+                                    png_path = f"./{session['path']}/Textures/{components.loc[component]['GUID']}/{condition_rating}.png",
+                                    target_node_ids = components.loc[component]['GUID'],
+                                    output_path= f"./{session['path']}/Modified/{session['file_name']}_{condition_rating}.glb",
+                                    scale=[2, 3]) 
+            temp_model_path = f"{session['path']}/Modified/{session['file_name']}_{condition_rating}.glb"
+
 
 with c2:
     # Display the GLB file
