@@ -19,3 +19,10 @@ if st.button("API Configuration ➡️", type="primary"):
     # Switch to the API configuration page
     st.switch_page("pages/API Configuration.py")
 
+os.makedirs('Archive', exist_ok=True)
+os.makedirs('temp', exist_ok=True)
+session = {}
+session['cwd'] = st.session_state.cwd
+import json
+with open("./temp/session.json", "w") as f:
+    json.dump(session, f, indent=4)

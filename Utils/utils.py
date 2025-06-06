@@ -147,3 +147,53 @@ def data_extraction (file_path):
         component.at[i,'Type'] = type_
         i+=1
     return (component)
+
+def load_image_from_gltf(glb_path, png_path, target_node_ids, output_path="test.glb", scale=[2, 3]):
+    if type(target_node_ids) != list:
+        target_node_ids = [target_node_ids]  # Ensure it's a list
+
+    from pygltflib import GLTF2, Texture, Image, Material
+    from PIL import Image as PILImage
+    import base64
+    gltf = GLTF2().load(glb_path)
+    import pandas as pd
+    glb_data = pd.DataFrame(gltf.nodes)
+
+    # Load and encode the PNG image as base64
+    with open(png_path, "rb") as f:
+        image_data = f.read()
+    image_base64 = base64.b64encode(image_data).decode('utf-8')
+
+    # Create GLTF Image
+    image = Image(uri="data:image/png;base64," + image_base64)
+    image_index = len(gltf.images)
+    gltf.images.append(image)
+
+    # Create Texture
+    texture = Texture(source=image_index)
+    texture_index = len(gltf.textures)
+    gltf.textures.append(texture)
+
+    # Create Material
+    material = Material(
+        name="CustomMaterial",
+        pbrMetallicRoughness={
+            "baseColorTexture": {"index": texture_index,
+                                 "extensions": {"KHR_texture_transform": {"scale": scale } # Tiling: 2x horizontal, 3x vertical
+                                 }
+        }}
+    )
+    #material.PBRMetallicRoughness = PBRMetallicRoughness
+    material_index = len(gltf.materials)
+    gltf.materials.append(material)
+
+    # Example IDs; replace with your actual component IDs
+    for node_id in target_node_ids:
+        indx = glb_data[glb_data['name']==node_id].index
+        node = gltf.nodes[indx[0]]
+        if node.mesh is not None:
+            mesh = gltf.meshes[node.mesh]
+            for primitive in mesh.primitives:
+                primitive.material = material_index
+    # Save new GLB
+    gltf.save(output_path)

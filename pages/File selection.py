@@ -1,6 +1,10 @@
 import streamlit as st
 import os 
 import shutil
+import json
+with open("./temp/session.json", "r") as f:
+    session = json.load(f)
+
 from Utils.utils import convert, display
 st.set_page_config(page_title="Select model", page_icon="🗃️", layout="wide", initial_sidebar_state='collapsed')
 st.title("Select model 🗃️")
@@ -86,8 +90,18 @@ with c1:
         pass
 
 os.chdir(st.session_state.cwd)
+if check_:
+    session['path'] = f'./Archive/{folder_name}'
+    session['file_name'] = file_name[:-5] if file_name.split('_')[-1] == 'base' else file_name
+    session['file_path'] = file_path
+    session['format'] = format_
+    session['Components'] = f'./Archive/{folder_name}/{session['file_name']}_components.csv'
+    session['Last rendered'] = display(file_path, transparency=1.0)
+    with open("./temp/session.json", "w") as file:
+         json.dump(session, file, indent=4) 
 
 #st.write(file_path)
 if st.button("Generate ➡️", type="primary", disabled = not check_):
     # Switch to the Generator page
     st.switch_page("pages/Generator.py")
+    
