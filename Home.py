@@ -15,14 +15,39 @@ st.image("./Assets/Framework.png", caption="Framework for Gen-AI-based VR Asset 
 
 st.markdown('#')
 
-if st.button("API Configuration ➡️", type="primary"):
-    # Switch to the API configuration page
-    st.switch_page("pages/API Configuration.py")
-
 os.makedirs('Archive', exist_ok=True)
 os.makedirs('temp', exist_ok=True)
-session = {}
-session['cwd'] = st.session_state.cwd
-import json
-with open("./temp/session.json", "w") as f:
-    json.dump(session, f, indent=4)
+
+c1, c2 = st.columns([1, 1])
+
+with c2:
+    st.markdown(" ### Start a completely new model")
+    st.markdown(" ### ")
+    
+    session = {}
+    session['cwd'] = st.session_state.cwd
+    #session['Modified_models'] = {}
+    #session['Rendered_models'] = {}
+    import json
+    with open("./temp/session.json", "w") as f:
+        json.dump(session, f, indent=4)
+
+with c1: 
+    file = st.file_uploader("Uplaod a saved model", type=["json"], key="model_file", label_visibility="collapsed")
+    #st.write((file.getbuffer()['cwd']))
+    
+    if file is not None:
+        contents = file.read().decode("utf-8")
+        data_dict = json.loads(contents)
+        with open("./temp/session.json", "w") as f:
+            json.dump(data_dict, f, indent=4)
+    
+    
+c1, c2 = st.columns([1, 1])
+with c2:
+    if st.button("Start a new model ➡️", type="primary"):
+        # Switch to the API configuration page
+        st.switch_page("pages/API Configuration.py")
+with c1:
+    if st.button("Generator", type="primary"):
+        st.switch_page("pages/Generator.py")

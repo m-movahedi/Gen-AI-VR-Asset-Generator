@@ -96,7 +96,8 @@ if check_:
     session['file_path'] = file_path
     session['format'] = format_
     session['Components'] = f'./Archive/{folder_name}/{session['file_name']}_components.csv'
-    session['Last rendered'] = display(file_path, transparency=1.0)
+    #session['Rendered_models']['Base'] = display(file_path, transparency=1.0)
+    #session['Modified_models']['Base'] = file_path
     with open("./temp/session.json", "w") as file:
          json.dump(session, file, indent=4) 
 

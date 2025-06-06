@@ -1,0 +1,10 @@
+{
+    "cwd": "C:\\Users\\moham\\Documents\\GitHub\\Gen-AI-VR-Asset-Generator",
+    "openai_api_key": "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",
+    "gemeni_api_key": "AIzaSyDJRxD3Xm53-qIVagRcDNgUOf7lnK44lTw",
+    "path": "./Archive/construction_colum_set_1",
+    "file_name": "construction_colum_set_1",
+    "file_path": "./Archive/construction_colum_set_1/construction_colum_set_1_base.glb",
+    "format": "glb",
+    "Components": "./Archive/construction_colum_set_1/construction_colum_set_1_components.csv"
+}

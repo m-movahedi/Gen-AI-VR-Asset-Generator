@@ -4,6 +4,7 @@ from Utils.utils import display
 import json
 with open("./temp/session.json", "r") as f:
     session = json.load(f)
+
 st.session_state.cwd = os.getcwd()
 # Set the title of the page
 st.set_page_config(page_title="Generator", page_icon="⚙️", layout="wide", initial_sidebar_state='collapsed')
@@ -55,6 +56,8 @@ with c1:
     for i in component_list:
         component_indx.append(components[components['GUID'] == i].index[0])
     #st.write(component_indx)
+        
+
     if generate_flag:
         from Utils.utils import generate_image, load_image_from_gltf
         system_prompt = f"""You are a Gen-AI model that generates textures for 3D models based on the provided components and additional information.
@@ -62,10 +65,10 @@ with c1:
                             {knowledge_base_file.getvalue().decode('utf-8') if knowledge_base_file else "0: New, 100: Deteriorated"}"""
         os.makedirs(f"./{session['path']}/Textures",  exist_ok=True)
         os.makedirs(f"./{session['path']}/Modified",  exist_ok=True)
-        st.progress(0, text="Generating assets...")
+        #st.progress(0, text="Generating assets...")
         temp_model_path = session['file_path']
         for component in component_indx:
-            st.write( components.loc[component]['GUID'])
+            #st.write( components.loc[component]['GUID'])
             os.makedirs(f"{session['path']}/Textures/{components.loc[component]['GUID']}",  exist_ok=True)
             user_prompt = f"""Generate a texture image of the surface of a {components.loc[component]['Material']} material at condition rating index (CI) of {condition_rating} percent.
             Generate a texture that shows the surface condition of the material and can be applies to the 3D object in a glb file"""
@@ -83,13 +86,21 @@ with c1:
                                     output_path= f"./{session['path']}/Modified/{session['file_name']}_{condition_rating}.glb",
                                     scale=[2, 3]) 
             temp_model_path = f"{session['path']}/Modified/{session['file_name']}_{condition_rating}.glb"
+            #session['Modified_models'][str(condition_rating)] = temp_model_path
+            #session['Rendered_models'][str(condition_rating)] = display(temp_model_path, transparency=1.0)
+        
 
-
+            
 with c2:
     # Display the GLB file
     try:
-        st.components.v1.html(session['Last rendered'], height=520)
+        html = display(temp_model_path, transparency=1.0)
+        st.components.v1.html(html, height=520)
     except:
-        st.error("No file to display. Please upload go back to the File Selecetion Tab", icon="❌")
+        #st.components.v1.html(session['Rendered_models']['Base'], height=520)
+        pass
 
-    
+#st.write(file_path)
+if st.button("Visualize ➡️", type="primary"):
+    # Switch to the Generator page
+    st.switch_page("pages/Visualize.py")
