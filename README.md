@@ -6,4 +6,4 @@ This framework combines generative artificial intelligence (Gen AI) and virtual 
 ![image](./Assets/Framework.png)
 
 ## Publication
-Movahedi, M., Bravo, C. and Choi, J. (2025) ***"Generative Artificial Intelligence and Virtual Reality: Emerging Future of the Building Component Inspection Training"***, in 23rd CIB World Building Congress, pp. 1–10.
+Movahedi, M., Bravo, C. and Choi, J. (2025) ***"Generative Artificial Intelligence and Virtual Reality: Emerging Future of the Building Component Inspection Training"***, in 23rd CIB World Building Congress.
