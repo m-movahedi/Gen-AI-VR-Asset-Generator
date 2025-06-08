@@ -33,10 +33,12 @@ with c2:
         json.dump(session, f, indent=4)
 
 with c1: 
+    saved_flag = False
     file = st.file_uploader("Uplaod a saved model", type=["json"], key="model_file", label_visibility="collapsed")
     #st.write((file.getbuffer()['cwd']))
     
     if file is not None:
+        saved_flag = True
         contents = file.read().decode("utf-8")
         data_dict = json.loads(contents)
         with open("./temp/session.json", "w") as f:
@@ -49,5 +51,5 @@ with c2:
         # Switch to the API configuration page
         st.switch_page("pages/API Configuration.py")
 with c1:
-    if st.button("Load the model ⬆️", type="primary"):
+    if st.button("Load the model ⬆️", type="primary", disabled=not saved_flag):
         st.switch_page("pages/Generator.py")

@@ -1,3 +1,4 @@
 pygltflib
 openai
 ifcopenshell
+google-genai

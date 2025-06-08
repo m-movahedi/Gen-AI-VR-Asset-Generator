@@ -198,18 +198,43 @@ def load_image_from_gltf(glb_path, png_path, target_node_ids, output_path="test.
     # Save new GLB
     gltf.save(output_path)
 
+
+# Model lister
+def avaialable_models():
+    model_dic = {   'Google Gemeni 2':'gemini-2.0-flash-preview-image-generation',
+                    'OpenAI GPT Image 1': 'gpt-image-1',
+                    'OpenAI DALL.E 2': 'dall-e-2'}
+    return (model_dic)
+
+# Image generation function
 import base64
 from openai import OpenAI
+from google import genai
+from google.genai import types
+from PIL import Image
+from io import BytesIO
 
-def generate_image(api_key,
+def generate_image( api_dic,
                     model="gpt-image-1",
                     prompt="a texture of a rusty metal surface, highly detailed, suitable for 3D rendering",
                     image_path= './temp/test.png'):
-
-    client = OpenAI(api_key = api_key)
-    img = client.images.generate(model = model, prompt = prompt)
-
-    image_bytes = base64.b64decode(img.data[0].b64_json)
-    with open(image_path, "wb") as f:
-        f.write(image_bytes)
+    if model in ['gpt-image-1', 'dall-e-2']:
+        client = OpenAI(api_key = api_dic ['openai_api_key'])
+        img = client.images.generate(model = model, prompt = prompt)
+        image_bytes = base64.b64decode(img.data[0].b64_json)
+        with open(image_path, "wb") as f:
+            f.write(image_bytes)
+        
+    elif model in ['gemini-2.0-flash-preview-image-generation']:
+        client = genai.Client(api_key= api_dic ['gemeni_api_key'])
+        response = client.models.generate_content(model="gemini-2.0-flash-preview-image-generation",
+                                                  contents = (prompt),
+                                                  config=types.GenerateContentConfig(response_modalities=['TEXT', 'IMAGE']))
+        for part in response.candidates[0].content.parts:
+            if part.text is not None:
+                pass
+            elif part.inline_data is not None:
+                image = Image.open(BytesIO((part.inline_data.data)))
+                image.save(image_path, format='PNG')
+    
     return (image_path)

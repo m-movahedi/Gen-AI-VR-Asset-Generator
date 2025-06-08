@@ -25,7 +25,7 @@ check_apis = False
 
 st.session_state.openai_api_key = openai
 st.session_state.gemini_api_key = gemeni
-
+api_dic = {}
 if openai and gemeni:
     # Save the API keys to a file or environment variable
     st.success("API Keys are set successfully!")
@@ -37,10 +37,12 @@ if openai and gemeni:
     api_df.loc[0] = ['OpenAI', openai]
     api_df.loc[1] = ['Gemini', gemeni]
     api_df.to_csv('./temp/api_keys.csv', index=False)
-    session ['openai_api_key'] = openai
-    session ['gemeni_api_key'] = gemini
+    api_dic ['openai_api_key'] = openai
+    api_dic ['gemeni_api_key'] = gemini
     with open("./temp/session.json", "w") as file:
          json.dump(session, file, indent=4) 
+    with open("./temp/API.json", "w") as file:
+         json.dump(api_dic, file, indent=4) 
 else:
     st.warning("Please enter both OpenAI and Gemini API keys to proceed.")
 

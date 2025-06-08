@@ -61,10 +61,18 @@ with c2:
                 file_path = f'./Archive/{folder_name}/{folder_name}_base.glb'
                 format_ = 'glb'
                 check_ = True
-                import pandas as pd
-                component = pd.read_csv(f'./Archive/{folder_name}/{folder_name}_components.csv') 
                 st.success(f"""GLB file is loaded.""", icon="✅")
-                st.success(f"""Data file is uploaded.""", icon="✅")
+                try:
+                    import pandas as pd
+                    component = pd.read_csv(f'./Archive/{folder_name}/{folder_name}_components.csv') 
+                    st.success(f"""Data file is uploaded.""", icon="✅")
+                except:
+                    uploaded_file = st.file_uploader("Upload your data file", type=["csv"], key="model_file", label_visibility="collapsed")
+                    if uploaded_file is not None:
+                        df = pd.read_csv(uploaded_file)
+                        df.to_csv(f'./Archive/{folder_name}/{folder_name}_components.csv', index=False)
+                        st.success(f"""Data file is uploaded.""", icon="✅")
+
             else:
                 st.error("Please upload a valid file format: IFC, DAE, or GLB.", icon="❌")
 
