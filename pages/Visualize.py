@@ -19,7 +19,6 @@ with c2:
     from Utils.utils import display
     st.components.v1.html(display(f"./{session['path']}/Modified/{chosen_model}", transparency=1.0), height=520)
 
-session['Generated_models'] = modified_models
 
 if st.button("Save 💾 ", type="primary"):
     with open(f"./{session['path']}/{session['file_name']}.json", "w") as file:
