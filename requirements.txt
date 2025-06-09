@@ -1,4 +1,5 @@
-pygltflib
-openai
-ifcopenshell
-google-genai
+streamlit==1.45.1
+pygltflib==1.16.4
+openai==1.84.0
+ifcopenshell==0.8.2
+google-genai=1.19.0
