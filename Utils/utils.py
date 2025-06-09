@@ -238,3 +238,23 @@ def generate_image( api_dic,
                 image.save(image_path, format='PNG')
     
     return (image_path)
+
+
+def create_component_dataframe(path = 'Sample/highway_bridge_chinese_style.glb',
+                               export_path = 'Sample/highway_bridge_chinese_style.csv'):
+    from pygltflib import GLTF2, Material, BLEND
+    import pandas as pd
+    glb = GLTF2().load(path)
+    GUID= []
+    Material = []
+    Type = []
+    for i in glb.nodes:
+        GUID.append(i.name)
+        Material.append(i.name)
+        Type.append(i.name)
+
+    df = pd.DataFrame()
+    df['GUID'] = GUID
+    df['Material'] = Material
+    df['Type'] = Type
+    df.to_csv(export_path, index=False)

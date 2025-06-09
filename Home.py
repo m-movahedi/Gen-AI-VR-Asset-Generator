@@ -26,6 +26,8 @@ with c2:
     
     session = {}
     session['cwd'] = st.session_state.cwd
+    session['Models_Name'] = []
+    session['Models_Path'] = []
     #session['Modified_models'] = {}
     #session['Rendered_models'] = {}
     import json
