@@ -50,6 +50,14 @@ If you have any questions, suggestions, or need support, please feel free to con
 **Mohammad Movahedi**  
 📧 [mmovahedi@fsu.edu](mailto:mmovahedi@fsu.edu)
 
+## 📄 License
+
+This project is licensed under a **Custom Non-Commercial License**.  
+It is free for personal, academic, and research use.  
+**Commercial use is prohibited without explicit permission from the author.**
+
+See the [LICENSE](LICENSE) file for full terms.
+
 ## Publication
 Research based on the paper:
 
