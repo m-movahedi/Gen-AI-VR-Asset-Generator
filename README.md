@@ -29,12 +29,15 @@ It supports real-time interaction with deteriorating building components like pi
 * BIM Models (.ifc, .dae, and .glb) – for accurate 3D representations of facilities
   
 ## 👨‍💼 Team
-* **Juyeong Choi** – <jchoi@eng.famu.fsu.edu>
-* **Mohammad Movahedi** – <mmovahedi@fsu.edu>
-* **Carlos Geronimo Bravo** – <cgb22h@fsu.edu>
-* **Brandon Pina** – <bp22c@fsu.edu>
-* **Leonardo Do Nascimento** – <lmd22j@fsu.edu>
 
-Affiliated with the FAMU-FSU College of Engineering and Florida State University.
+* **Juyeong Choi** <sup>1</sup> – <jchoi@eng.famu.fsu.edu>
+* **Mohammad Movahedi** <sup>1</sup> – <mmovahedi@fsu.edu>
+* **Carlos Geronimo Bravo** <sup>2</sup> – <cgb22h@fsu.edu>
+* **Brandon Pina** <sup>2</sup> – <bp22c@fsu.edu>
+* **Leonardo Do Nascimento** <sup>2</sup> – <lmd22j@fsu.edu>
+
+<sup>1</sup> Department of Civil and Environmental Engineering, FAMU-FSU College of Engineering, Tallahassee, FL, USA
+
+<sup>2</sup> Department of Computer Science, Florida State University, Tallahassee, FL, USA.
 ## Publication
 Movahedi, M., Bravo, C. and Choi, J. (2025) ***"Generative Artificial Intelligence and Virtual Reality: Emerging Future of the Building Component Inspection Training"***, in 23rd CIB World Building Congress.
