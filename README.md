@@ -29,11 +29,11 @@ It supports real-time interaction with deteriorating building components like pi
 * BIM Models (.ifc, .dae, and .glb) – for accurate 3D representations of facilities
   
 ## 👨‍💼 Team
-**Juyeong Choi** – <jchoi@eng.famu.fsu.edu>
-**Mohammad Movahedi** – <mmovahedi@fsu.edu>
-**Carlos Geronimo Bravo** – <cgb22h@fsu.edu>
-**Brandon Pina** – <bp22c@fsu.edu>
-**Leonardo Do Nascimento** – <lmd22j@fsu.edu>
+* **Juyeong Choi** – <jchoi@eng.famu.fsu.edu>
+* **Mohammad Movahedi** – <mmovahedi@fsu.edu>
+* **Carlos Geronimo Bravo** – <cgb22h@fsu.edu>
+* **Brandon Pina** – <bp22c@fsu.edu>
+* **Leonardo Do Nascimento** – <lmd22j@fsu.edu>
 
 Affiliated with the FAMU-FSU College of Engineering and Florida State University.
 ## Publication
