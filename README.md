@@ -7,8 +7,9 @@ This framework combines generative artificial intelligence (Gen AI) and virtual 
 ## 📦 Installation
 Simply run **Gen AI VR.bat** to automatically install all required dependencies.
 
-<pre> Gen-AI-VR Gen AI VR.bat </pre>
-
+<pre> Utils/bin.bat </pre>
+or its shortcut
+<pre> ./Gen AI VR </pre>
 ## 🚀 Features
 Immersive VR Environment: Train in a virtual 3D facility built on BIM models.
 * AI-Generated Defects: Realistic textures (e.g., rust, cracks, scaling) created using Stable Diffusion and other diffusion models.
@@ -50,4 +51,6 @@ If you have any questions, suggestions, or need support, please feel free to con
 📧 [mmovahedi@fsu.edu](mailto:mmovahedi@fsu.edu)
 
 ## Publication
+Research based on the paper:
+
 Movahedi, M., Bravo, C. and Choi, J. (2025) ***"Generative Artificial Intelligence and Virtual Reality: Emerging Future of the Building Component Inspection Training"***, in 23rd CIB World Building Congress.
