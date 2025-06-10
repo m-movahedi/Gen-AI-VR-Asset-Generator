@@ -1,6 +1,0 @@
-Condition Index (CI)	Condition Rating	Description
-CI 85–100	Excellent (Green)	I-beam is in like-new condition. No visible corrosion, deformation, cracks, or coating failures. Load-bearing performance is unaffected. No maintenance required.
-CI 70–84	Good (Green)	Minor surface corrosion or coating wear. No structural deformation. Beam maintains full capacity. Preventive maintenance recommended (e.g., surface cleaning, touch-up coating).
-CI 55–69	Fair (Yellow)	Moderate corrosion (≤10% surface area), some protective coating loss. No structural compromise, but early signs of material thinning or scale buildup. Needs minor repair and recoating.
-CI 40–54	Poor (Orange)	Extensive corrosion (10–30%), coating failure, possible minor pitting. Signs of early structural degradation (e.g., web thinning, flange scaling). Load capacity not yet impacted, but deterioration progressing. Requires corrective maintenance.
-CI 0–39	Failed/Critical (Red)	Severe corrosion (>30%), flaking, pitting, or deformation. Cracks, delamination, or cross-section loss may exist. Structural capacity may be reduced. Immediate repair, reinforcement, or replacement needed. Safety risk present.

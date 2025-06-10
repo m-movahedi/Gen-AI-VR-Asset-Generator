@@ -24,12 +24,7 @@ with c1:
             st.write("Select components:")
         with c12:
             import pandas as pd
-            try:
-                components = pd.read_csv(session['Components'])
-            except:
-                from Utils.utils import create_component_dataframe
-                create_component_dataframe(session['file_path'], export_path = session['Components'])
-                components = pd.read_csv(session['Components'])
+            components = pd.read_csv(session['Components'])
             component_list = st.multiselect("Select components", options=components['GUID'].tolist(), label_visibility="collapsed", placeholder="Select components")
     with tab2:
         c11, c12 = st.columns([1, 1.5])
@@ -55,11 +50,9 @@ with c1:
             knowledge_path = f"./{session['path']}/{session['file_name']}_knowledge.txt"
             with open(knowledge_path, "wb") as f:
                 f.write(knowledge_base_file.getbuffer())
-            
+            st.success(f"Knowledge base file '{knowledge_base_file.name}' uploaded successfully.", icon="✅")
             session['knowledge_base_file'] = knowledge_path
             session['knowledge_base']= knowledge_base_file.getbuffer()
-    st.success(f"Knowledge base file '{knowledge_base_file.name}' uploaded successfully.", icon="✅")
-    
     st.write("Additional description:")
     additional_info = st.text_input("Enter additional information (optional)", label_visibility="collapsed")
     st.write('Condition rating:')
@@ -71,11 +64,11 @@ with c1:
     # model selection
     c11, c12 = st.columns([1, 1.5])
     with c11:
-        st.write("Texture generation model")
+        st.write("Select a Gen-AI model")
     with c12:
         from Utils.utils import avaialable_models
         model_dic = avaialable_models()
-        texture_model_text = st.selectbox("Select a texture generation model", options=list(model_dic.keys()), label_visibility="collapsed", placeholder="Select a Gen-AI model")
+        texture_model_text = st.selectbox("Select a Gen-AI model", options=list(model_dic.keys()), label_visibility="collapsed", placeholder="Select a Gen-AI model")
         texture_model = model_dic[texture_model_text] if texture_model_text else None
 
         session['texture_model'] = texture_model
@@ -114,10 +107,6 @@ with c1:
                                     scale=[2, 3]) 
             temp_model_path = f"{session['path']}/Modified/{session['file_name']}_{condition_rating}.glb"    
             
-        #session['Models_Name'].append(condition_rating)
-        #session['Models_Path'].append(f"{session['path']}/Modified/{session['file_name']}_{condition_rating}.glb")
-        #with open("./temp/session.json", "w") as file:
-        #    json.dump(session, file, indent=4) 
 with c2:
     # Display the GLB file
     try:
