@@ -32,14 +32,22 @@ It supports real-time interaction with deteriorating building components like pi
   
 ## 👨‍💼 Team
 
-* **Juyeong Choi** <sup>1</sup> – <jchoi@eng.famu.fsu.edu>
-* **Mohammad Movahedi** <sup>1</sup> – <mmovahedi@fsu.edu>
-* **Carlos Geronimo Bravo** <sup>2</sup> – <cgb22h@fsu.edu>
-* **Brandon Pina** <sup>2</sup> – <bp22c@fsu.edu>
-* **Leonardo Do Nascimento** <sup>2</sup> – <lmd22j@fsu.edu>
+* **Juyeong Choi** <sup>1</sup> – [jchoi@eng.famu.fsu.edu]<mailto:jchoi@eng.famu.fsu.edu>
+* **Mohammad Movahedi** <sup>1</sup> – [mmovahedi@fsu.edu](mailto:mmovahedi@fsu.edu)
+* **Carlos Geronimo Bravo** <sup>2</sup> – [cgb22h@fsu.edu]<mailto:cgb22h@fsu.edu>
+* **Brandon Pina** <sup>2</sup> – [bp22c@fsu.edu]<mailto:bp22c@fsu.edu>
+* **Leonardo Do Nascimento** <sup>2</sup> – [lmd22j@fsu.edu]<mailto:lmd22j@fsu.edu>
 
 <sup>1</sup> Department of Civil and Environmental Engineering, FAMU-FSU College of Engineering, Tallahassee, FL, USA
 
 <sup>2</sup> Department of Computer Science, Florida State University, Tallahassee, FL, USA.
+
+## ❓ Questions?
+
+If you have any questions, suggestions, or need support, please feel free to contact:
+
+**Mohammad Movahedi**  
+📧 [mmovahedi@fsu.edu](mailto:mmovahedi@fsu.edu)
+
 ## Publication
 Movahedi, M., Bravo, C. and Choi, J. (2025) ***"Generative Artificial Intelligence and Virtual Reality: Emerging Future of the Building Component Inspection Training"***, in 23rd CIB World Building Congress.
