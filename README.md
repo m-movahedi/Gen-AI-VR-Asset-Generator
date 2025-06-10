@@ -52,9 +52,12 @@ If you have any questions, suggestions, or need support, please feel free to con
 
 ## 📄 License
 
-This project is licensed under a **Custom Non-Commercial License**.  
-It is free for personal, academic, and research use.  
-**Commercial use is prohibited without explicit permission from the author.**
+This project is licensed under a **CC BY-NC 4.0**. 
+
+![CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/88x31.png)
+
+* It is free for personal, academic, and research use.  
+* **Commercial use is prohibited without explicit permission from the author.**
 
 See the [LICENSE](LICENSE) file for full terms.
 
